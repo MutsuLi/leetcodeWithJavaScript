@@ -157,6 +157,59 @@ class Alglorithms {
         return i;
     }
 
+    //33. 搜索旋转排序数组
+
+    /**
+     * 
+     * @param nums {[]}
+     * @param target {number}
+     * @return  {number}
+     * @summary
+     * 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
+     * 搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回 -1 。你可以假设数组中不存在重复的元素。你的算法时间复杂度必须是 O(log n) 级别。
+     * input: nums = [4,5,6,7,0,1,2], target = 0 output: 4
+     * 
+     */
+    //answer i 暴力法
+    searchSpinArray(nums, target) {
+        let len = nums.length;
+        let k = target;
+        if (k >= len) {
+            k %= len;
+        }
+        while (k) {
+            let previous = nums[len - 1];
+            for (let i = 0; i < len; i++) {
+                let temp = nums[i];
+                nums[i] = previous;
+                previous = temp;
+            }
+            k--;
+        }
+        return nums;
+    }
+    //answer ii 环形法
+    searchSpinArrayAnswerII(nums, target) {
+        let len = nums.length;
+        let k = target;
+        if (k >= len) {
+            k %= len;
+        }
+        let count = 0; //
+        for (let start = 0; count < len; start++) {
+            let prev = nums[start];
+            let current = start;
+            do {
+                let next = (k + current) % len;
+                let temp = nums[next];
+                nums[next] = prev;
+                prev = temp;
+                current = next;
+                count++;
+            } while (start !== current)
+        }
+        return nums;
+    }
 }
 
 module.exports = Alglorithms;

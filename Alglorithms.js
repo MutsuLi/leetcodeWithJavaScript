@@ -195,8 +195,10 @@ class Alglorithms {
         if (k >= len) {
             k %= len;
         }
-        let count = 0; //
+        let count = 0;
         for (let start = 0; count < len; start++) {
+            //start：遍历索引  count：交换次数
+            //nums[curr]...(k)..nums[next]
             let prev = nums[start];
             let current = start;
             do {
@@ -210,6 +212,8 @@ class Alglorithms {
         }
         return nums;
     }
+    // e.g. 1=>2=>3=>4=>5=>6=>7 move=2 
+
 }
 
 module.exports = Alglorithms;

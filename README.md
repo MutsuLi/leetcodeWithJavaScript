@@ -1,2 +1,2 @@
 # Alglorithms
-部分leetcode javascript实现
+leetcode javascript实现

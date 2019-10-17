@@ -157,7 +157,7 @@ class Alglorithms {
         return i;
     }
 
-    //33. 搜索旋转排序数组
+    //189. 旋转数组
 
     /**
      * 
@@ -165,9 +165,10 @@ class Alglorithms {
      * @param target {number}
      * @return  {number}
      * @summary
-     * 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
-     * 搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回 -1 。你可以假设数组中不存在重复的元素。你的算法时间复杂度必须是 O(log n) 级别。
-     * input: nums = [4,5,6,7,0,1,2], target = 0 output: 4
+     * 
+     * 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
+     * input: nums=[1,2,3,4,5,6,7],k = 3
+     * result: [5,6,7,1,2,3,4]
      * 
      */
     //answer i 暴力法
@@ -188,8 +189,9 @@ class Alglorithms {
         }
         return nums;
     }
+
     //answer ii 环形法
-    searchSpinArrayAnswerII(nums, target) {
+    static searchSpinArrayAnswerII(nums, target) {
         let len = nums.length;
         let k = target;
         if (k >= len) {
@@ -204,16 +206,162 @@ class Alglorithms {
             do {
                 let next = (k + current) % len;
                 let temp = nums[next];
+                //
                 nums[next] = prev;
                 prev = temp;
+                //
                 current = next;
                 count++;
             } while (start !== current)
         }
         return nums;
     }
-    // e.g. 1=>2=>3=>4=>5=>6=>7 move=2 
+    //33. 搜索旋转排序数组
+
+    /**
+     * 
+     * @param nums {[]}
+     * @param target {number}
+     * @return  {number}
+     * @summary
+     * 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
+     * 搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回 -1 。你可以假设数组中不存在重复的元素。你的算法时间复杂度必须是 O(log n) 级别。
+     * input: nums = [4,5,6,7,0,1,2], target = 0 output: 4
+     * 
+     */
+
+    SearchSpinArray(nums, target) {
+        let len = nums.length;
+
+        /**
+         * 
+         * @param  left {number} 
+         * @param  right {number} 
+         * 
+         */
+        let findTurningPoint = (nums, left, right) => {
+
+            if (nums[left] < nums[right]) return left;
+            while (left <= right) {
+                let pivot = parseInt((left + right) / 2);
+                if (nums[pivot] > nums[pivot + 1]) {
+                    return pivot + 1;
+                } else {
+                    if (nums[pivot] < nums[left]) {
+                        right = pivot - 1;
+                    } else {
+                        left = pivot + 1;
+                    }
+                }
+            }
+            return 0;
+        }
+
+        /**
+         * 
+         * @param  nums {[]}
+         * @param  left {number} 
+         * @param  right {number} 
+         * 
+         */
+
+        let BinarySearchSpinArray = (nums, left, right) => {
+
+            while (left <= right) {
+                let mid = parseInt((right - left) / 2 + left);
+                if (nums[mid] === target)
+                    return mid;
+                else {
+                    if (target < nums[mid])
+                        right = mid - 1;
+                    else
+                        left = mid + 1;
+                }
+            }
+            return -1
+        }
+
+        if (len === 0) return -1;
+        if (len === 1) return nums[0] == target ? 0 : -1;
+
+        let turningPoint = findTurningPoint(nums, 0, len - 1);
+
+        if (nums[turningPoint] === target) {
+            return turningPoint;
+        }
+        if (turningPoint === 0) {
+            return BinarySearchSpinArray(nums, 0, len - 1);
+        }
+        if (target >= nums[0]) {
+            return BinarySearchSpinArray(nums, 0, turningPoint);
+        } else {
+            return BinarySearchSpinArray(nums, turningPoint, len - 1);
+        }
+    }
 
 }
+
+// public int find_rotate_index(int left, int right) {
+//     if (nums[left] < nums[right])
+//       return 0;
+//     while (left <= right) {
+//       int pivot = (left + right) / 2;
+//       if (nums[pivot] > nums[pivot + 1])
+//         return pivot + 1;
+//       else {
+//         if (nums[pivot] < nums[left])
+//           right = pivot - 1;
+//         else
+//           left = pivot + 1;
+//       }
+//     }
+//     return 0;
+//   }
+
+//     public int search(int left, int right) {
+//       /*
+//     Binary search
+//     */
+//     while (left <= right) {
+//       int pivot = (left + right) / 2;
+//       if (nums[pivot] == target)
+//         return pivot;
+//       else {
+//         if (target < nums[pivot])
+//           right = pivot - 1;
+//         else
+//           left = pivot + 1;
+//       }
+//     }
+//     return -1;
+
+//   }
+
+//   public int search(int[] nums, int target) {
+//     this.nums = nums;
+//     this.target = target;
+
+//     int n = nums.length;
+
+//     if (n == 0)
+//       return -1;
+//     if (n == 1)
+//       return this.nums[0] == target ? 0 : -1;
+
+//     int rotate_index = find_rotate_index(0, n - 1);
+
+//     // if target is the smallest element
+//     if (nums[rotate_index] == target)
+//       return rotate_index;
+//     // if array is not rotated, search in the entire array
+//     if (rotate_index == 0)
+//       return search(0, n - 1);
+//     if (target < nums[0])
+//       // search in the right side
+//       return search(rotate_index, n - 1);
+//     // search in the left side
+//     return search(0, rotate_index);
+
+//     }
 
 module.exports = Alglorithms;

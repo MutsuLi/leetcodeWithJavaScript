@@ -230,6 +230,8 @@ class Alglorithms {
      * 
      */
 
+
+    //answer I leetcode official answer 
     SearchSpinArray(nums, target) {
         let len = nums.length;
 
@@ -298,70 +300,80 @@ class Alglorithms {
             return BinarySearchSpinArray(nums, turningPoint, len - 1);
         }
     }
+    //answer II
+    SearchSpinArrayAnswerII(nums, target) {
+        let len = nums.length;
+        let high = len - 1;
+        let low = 0;
+        while (low < high) {
+            let mid = parseInt((high - low) / 2 + low);
+            if (nums[0] <= nums[mid] && (target > nums[mid] || target < nums[0])) {
+                low = mid + 1;
+            } else {
+                if (target > nums[mid] && target < nums[0]) {
+                    low = mid + 1
+                } else {
+                    high = mid;
+                }
+            }
+        }
+        return (low === high && nums[low] === target) ? low : -1;
+        // let len = nums.length;
+        // let high = len - 1;
+        // let low = 0;
+        // while (low <= high) {
+        //     let mid = parseInt((high - low) / 2 + low);
+        //     if (target === nums[mid]) return mid;
+        //     if (nums[0] <= nums[mid] && (target > nums[mid] || target < nums[0])) {
+        //         low = mid + 1;
+        //     } else {
+        //         if (target > nums[mid] && target < nums[0]) {
+        //             low = mid + 1
+        //         } else {
+        //             high = mid - 1;
+        //         }
+        //     }
+        // }
+        // return -1;
+    }
+
+    /**
+     * 
+     * leetcode 15 三数之和
+     * 
+     * 给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
+     * 注意：答案中不可以包含重复的三元组。
+     * @param  nums {number []}
+     * @returns {number[][]}
+     * 
+     */
+    ThreeNumberSum(nums) {
+        const len = nums.length;
+        let res = [];
+        if (nums === null || len < 3) return res;
+        nums.sort((a, b) => a - b);
+        for (let i = 0; i < len; i++) {
+            if (nums[i] > 0) break;
+            if (i >= 1 && nums[i] == nums[i - 1]) continue;
+            let low = i + 1;
+            let high = len - 1;
+            while (low < high) {
+                let tempSum = nums[i] + nums[low] + nums[high];
+                if (tempSum === 0) {
+                    res.push([nums[i], nums[low], nums[high]]);
+                    while (low < high && nums[low] === nums[low + 1]) low++;
+                    while (low < high && nums[high] === nums[high - 1]) high--;
+                    low++;
+                    high--;
+                } else if (tempSum < 0) low++;
+                else if (tempSum > 0) high--;
+            }
+        }
+        return res;
+    }
+
 
 }
 
-// public int find_rotate_index(int left, int right) {
-//     if (nums[left] < nums[right])
-//       return 0;
-//     while (left <= right) {
-//       int pivot = (left + right) / 2;
-//       if (nums[pivot] > nums[pivot + 1])
-//         return pivot + 1;
-//       else {
-//         if (nums[pivot] < nums[left])
-//           right = pivot - 1;
-//         else
-//           left = pivot + 1;
-//       }
-//     }
-//     return 0;
-//   }
-
-//     public int search(int left, int right) {
-//       /*
-//     Binary search
-//     */
-//     while (left <= right) {
-//       int pivot = (left + right) / 2;
-//       if (nums[pivot] == target)
-//         return pivot;
-//       else {
-//         if (target < nums[pivot])
-//           right = pivot - 1;
-//         else
-//           left = pivot + 1;
-//       }
-//     }
-//     return -1;
-
-//   }
-
-//   public int search(int[] nums, int target) {
-//     this.nums = nums;
-//     this.target = target;
-
-//     int n = nums.length;
-
-//     if (n == 0)
-//       return -1;
-//     if (n == 1)
-//       return this.nums[0] == target ? 0 : -1;
-
-//     int rotate_index = find_rotate_index(0, n - 1);
-
-//     // if target is the smallest element
-//     if (nums[rotate_index] == target)
-//       return rotate_index;
-//     // if array is not rotated, search in the entire array
-//     if (rotate_index == 0)
-//       return search(0, n - 1);
-//     if (target < nums[0])
-//       // search in the right side
-//       return search(rotate_index, n - 1);
-//     // search in the left side
-//     return search(0, rotate_index);
-
-//     }
 
 module.exports = Alglorithms;

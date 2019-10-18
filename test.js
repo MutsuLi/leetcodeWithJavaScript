@@ -36,5 +36,9 @@ console.log(alglorith.searchSpinArray(test189, 1))
 console.log(Alglorithms.searchSpinArrayAnswerII(test189, 1))
 
 //test33
-let test33 = [3,1];
-console.log(alglorith.SearchSpinArray(test33, 3))
+let test33 = [0, 1, 2];
+console.log(alglorith.SearchSpinArrayAnswerII(test33, 1))
+
+//test33
+let test18 = [-2,0,1,1,2];
+console.log(JSON.stringify(alglorith.ThreeNumberSum(test18)))

@@ -39,6 +39,14 @@ console.log(Alglorithms.searchSpinArrayAnswerII(test189, 1))
 let test33 = [0, 1, 2];
 console.log(alglorith.SearchSpinArrayAnswerII(test33, 1))
 
-//test33
-let test18 = [-2,0,1,1,2];
-console.log(JSON.stringify(alglorith.ThreeNumberSum(test18)))
+//test15
+let test15 = [-2, 0, 1, 1, 2];
+console.log(JSON.stringify(alglorith.ThreeNumberSum(test15)))
+
+//test704
+let test704 = [-1, 0, 3, 5, 9, 12]
+console.log(Alglorithms.basicBinarySearch(test704, 9));
+
+//test18
+let test18 = [1, 0, -1, 0, -2, 2]
+console.log(JSON.stringify(Alglorithms.FourNumberSum(test18, 0)));

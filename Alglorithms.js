@@ -372,6 +372,71 @@ class Alglorithms {
         return res;
     }
 
+    /**
+     * 
+     * leetcode 704  
+     * 给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
+     * 
+     * @param {*} nums 
+     * @param {*} target 
+     * 
+     */
+
+    static basicBinarySearch(nums, target) {
+        let low = 0;
+        let high = nums.length - 1;
+        while (low <= high) {
+            let mid = parseInt((high - low) / 2) + low;
+            if (nums[mid] === target) {
+                return mid;
+            } else if (target > nums[mid]) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return -1;
+    }
+    /**
+     * 
+     * leetcode 18 四数之和
+     * 
+     * 给定一个包含 n 个整数的数组 nums 和一个目标值 target，判断 nums 中是否存在四个元素 a，b，c 和 d ，使得 a + b + c + d 的值与 target 相等？
+     * 注意：找出所有满足条件且不重复的四元组。
+     * @param  nums {number []}
+     * @returns {number[][]}
+     * 
+     */
+    static FourNumberSum(nums, target) {
+        const len = nums.length;
+        let res = [];
+        nums.sort((a, b) => a - b);
+        if (len < 4) return res;
+        for (let a = 0; a < len - 3; a++) {
+            if (a > 0 & nums[a] === nums[a - 1]) continue;
+            for (let b = a + 1; b < len - 2; b++) {
+                if (b > a + 1 & nums[b] === nums[b - 1]) continue;
+                let c = b + 1;
+                let d = len - 1;
+                while (c < d) {
+                    let tempSum = nums[a] + nums[b] + nums[c] + nums[d];
+                    if (tempSum > target) {
+                        d--;
+                    } else if (tempSum < target) {
+                        c++;
+                    } else {
+                        res.push([nums[a], nums[b], nums[c], nums[d]]);
+                        while (c < d && nums[c] === nums[c + 1]) c++;
+                        while (c < d && nums[d] === nums[d - 1]) d--;
+                        c++;
+                        d--;
+                    }
+
+                }
+            }
+        }
+        return res;
+    }
 
 }
 

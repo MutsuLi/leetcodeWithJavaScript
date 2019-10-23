@@ -450,17 +450,64 @@ class Alglorithms {
     static ArrayShuffle(nums) {
         this.origin = [...nums];
 
-        let reset = (nums) => {
+        this.ArrayShuffle.reset = (nums) => {
             return this.origin;
         };
-
-        let n = nums.length;
-        for (let i = 0; i < n; i++) {
-            let rand = Math.floor(Math.random() * (i + 1));
-            let temp = nums[rand];
-            nums[rand] = nums[i];
-            nums[i] = temp;
+        this.ArrayShuffle.shuffle = (nums) => {
+            let n = nums.length;
+            for (let i = 0; i < n; i++) {
+                let rand = Math.floor(Math.random() * (i + 1));
+                let temp = nums[rand];
+                nums[rand] = nums[i];
+                nums[i] = temp;
+            }
+            return nums;
         }
+
+    }
+
+    /**
+     * 
+     * leetcode 155
+     * Easy
+     * 
+     * 设计一个支持 push，pop，top 操作，并能在常数时间内检索到最小元素的栈。
+     * push(x) -- 将元素 x 推入栈中。
+     * pop() -- 删除栈顶的元素.
+     * top() -- 获取栈顶元素。
+     * getMin() -- 检索栈中的最小元素。
+     * @param {} x 
+     * 
+     */
+    static minStack(x) {
+        let stack = [];
+        let helper = [];
+        this.minStack.push = (x) => {
+            stack.push(x);
+            let len = helper.length;
+            if (len === 0 || helper[len - 1] > x) {
+                helper.push(x);
+            } else {
+                helper.push(helper[len - 1]);
+            }
+        }
+        this.minStack.pop = () => {
+            if (stack.length !== 0) {
+                helper.pop();
+                stack.pop();
+            }
+        }
+        this.minStack.top = (x) => {
+            let len = stack.length;
+            return stack[len - 1];
+        }
+        this.minStack.getMin = (x) => {
+            let len = helper.length;
+            if (len !== 0) {
+                return helper[len - 1];
+            }
+        }
+        return this.minStack;
     }
 
 

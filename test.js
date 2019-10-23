@@ -50,3 +50,12 @@ console.log(Alglorithms.basicBinarySearch(test704, 9));
 //test18
 let test18 = [1, 0, -1, 0, -2, 2]
 console.log(JSON.stringify(Alglorithms.FourNumberSum(test18, 0)));
+
+//test155
+let test155 = Alglorithms.minStack();
+test155.push(12);
+test155.push(113);
+test155.push(114);
+test155.push(11);
+test155.push(115);
+console.log(test155.getMin());

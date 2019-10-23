@@ -397,6 +397,7 @@ class Alglorithms {
         }
         return -1;
     }
+
     /**
      * 
      * leetcode 18 四数之和
@@ -437,6 +438,31 @@ class Alglorithms {
         }
         return res;
     }
+
+    /**
+     * 
+     * LeetCode 384
+     * medium
+     * 打乱一个没有重复元素的数组。
+     * @param {*} nums 
+     * 
+     */
+    static ArrayShuffle(nums) {
+        this.origin = [...nums];
+
+        let reset = (nums) => {
+            return this.origin;
+        };
+
+        let n = nums.length;
+        for (let i = 0; i < n; i++) {
+            let rand = Math.floor(Math.random() * (i + 1));
+            let temp = nums[rand];
+            nums[rand] = nums[i];
+            nums[i] = temp;
+        }
+    }
+
 
 }
 
